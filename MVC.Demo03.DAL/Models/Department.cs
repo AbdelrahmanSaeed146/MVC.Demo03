@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.DAL.Models
 {
-    internal class Department
+    public class Department
     {
         public int Id { get; set; }
         public String Code { get; set; }

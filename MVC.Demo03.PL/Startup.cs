@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC.Demo03.DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,14 @@ namespace MVC.Demo03.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            //services.AddScoped<AppDbContext>();
+            //services.AddScoped<DbContextOptions<AppDbContext>>();
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer("Server = . ; Datebase = MvcApp;Trusted_Connection=True");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

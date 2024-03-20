@@ -10,10 +10,15 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.DAL.Data
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       => optionsBuilder.UseSqlServer("Server = . ; Datebase = MvcApp;Trusted_Connection=True");
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
+        {
+            
+        }
+       // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       //=> optionsBuilder.UseSqlServer("Server = . ; Datebase = MvcApp;Trusted_Connection=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,5 +27,6 @@ namespace MVC.Demo03.DAL.Data
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());  
         }
         public DbSet<Department> Departments { get; set; }
+        
     }
 }
