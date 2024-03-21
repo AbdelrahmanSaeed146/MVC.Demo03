@@ -10,7 +10,11 @@ namespace MVC.Demo03.DAL.Models
     public class Department
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage ="Code Is Requierd")]
         public String Code { get; set; }
+
+        [Required(ErrorMessage = "Name Is Requierd")]
         public string Name { get; set; }
 
         [Display(Name = "Date Of Creation")]

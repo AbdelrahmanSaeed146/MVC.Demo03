@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.BLL.Repositories;
+using MVC.Demo03.DAL.Models;
 
 namespace MVC.Demo03.PL.Controllers
 {
@@ -16,6 +17,24 @@ namespace MVC.Demo03.PL.Controllers
         {
             var departments = _departmentRepo.GetAll(); 
             return View(departments);
+        }
+
+        
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Department department)
+        {
+            if (ModelState.IsValid) // server sidee validation
+            {
+                var count = _departmentRepo.Add(department);
+                if (count > 0)
+                    return RedirectToAction(nameof(Index));
+            }
+            return View(department);
         }
     }
 }
