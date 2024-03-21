@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.BLL.Interfaces
 {
-    internal interface IDepartmentRepository
+    public interface IDepartmentRepository
     {
 
         IEnumerable<Department> GetAll();   
