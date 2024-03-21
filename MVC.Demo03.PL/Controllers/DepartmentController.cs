@@ -4,17 +4,18 @@ using MVC.Demo03.BLL.Repositories;
 
 namespace MVC.Demo03.PL.Controllers
 {
-    public class DepatmentController : Controller
+    public class DepartmentController : Controller
     {
         private readonly IDepartmentRepository _departmentRepo;
 
-        public DepatmentController(IDepartmentRepository departmentRepo)
+        public DepartmentController(IDepartmentRepository departmentRepo)
         {
             _departmentRepo = departmentRepo;
         }
         public IActionResult Index()
         {
-            return View();
+            var departments = _departmentRepo.GetAll(); 
+            return View(departments);
         }
     }
 }

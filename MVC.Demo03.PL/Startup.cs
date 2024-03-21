@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
+using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Data;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace MVC.Demo03.PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             //services.AddScoped<AppDbContext>();
             //services.AddScoped<DbContextOptions<AppDbContext>>();
@@ -37,7 +38,7 @@ namespace MVC.Demo03.PL
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<IDepartmentRepository, IDepartmentRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

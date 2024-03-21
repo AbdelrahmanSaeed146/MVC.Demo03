@@ -12,6 +12,8 @@ namespace MVC.Demo03.DAL.Models
         public int Id { get; set; }
         public String Code { get; set; }
         public string Name { get; set; }
+
+        [Display(Name = "Date Of Creation")]
         public DateTime DateOfCreation { get; set; }
 
     }
