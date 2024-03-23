@@ -93,5 +93,30 @@ namespace MVC.Demo03.PL.Controllers
 
             }
         }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            return Details(id,"Delete");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Department dept)
+        {
+            try
+            {
+                _departmentRepo.Delete(dept);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+
+                 ModelState.AddModelError(string.Empty, ex.Message);
+                return View(dept);
+            }
+
+        }
+
+
     }
 }
