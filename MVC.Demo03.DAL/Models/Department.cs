@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.DAL.Models
 {
-    public class Department
+    public class Department :ModelBase
     {
-        public int Id { get; set; }
+
 
         [Required(ErrorMessage ="Code Is Requierd")]
         public String Code { get; set; }

@@ -26,11 +26,11 @@ namespace MVC.Demo03.DAL.Models
         PartTime = 2
     }
 
-    public class Employee
+    public class Employee :ModelBase
     {
 
 
-        public int Id { get; set; }
+
 
         [Required]
         [MaxLength(50, ErrorMessage = "Max Length Of Name is 50 chars")]
