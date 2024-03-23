@@ -17,8 +17,9 @@ namespace MVC.Demo03.DAL.Data
         {
             
         }
-       // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       //=> optionsBuilder.UseSqlServer("Server = . ; Datebase = MvcApp;Trusted_Connection=True");
+
+       /// protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       ///=> optionsBuilder.UseSqlServer("Server = . ; Datebase = MvcApp;Trusted_Connection=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +28,7 @@ namespace MVC.Demo03.DAL.Data
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());  
         }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         
     }
 }
