@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.BLL.Interfaces
 {
-    internal interface IEmployeeRepository :IGenaricRepository<Employee>
+    public interface IEmployeeRepository :IGenaricRepository<Employee>
     {
             IQueryable<Employee> GetEmployeesByAddress(string address);
     }

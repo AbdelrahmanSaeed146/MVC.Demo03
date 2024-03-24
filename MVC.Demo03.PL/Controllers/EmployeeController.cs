@@ -2,71 +2,73 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
-using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Models;
 using System;
 
 namespace MVC.Demo03.PL.Controllers
 {
-    public class DepartmentController : Controller
+    public class EmployeeController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepo;
+
+        private readonly IEmployeeRepository _EmployeeRepo;
         private readonly IWebHostEnvironment _env;
 
-        public DepartmentController( IDepartmentRepository departmentRepo , IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepo, IWebHostEnvironment env)
         {
-            _departmentRepo = departmentRepo;
+            _EmployeeRepo = employeeRepo;
             _env = env;
         }
+
+
         public IActionResult Index()
         {
-            var departments = _departmentRepo.GetAll(); 
-            return View(departments);
+            var Employees = _EmployeeRepo.GetAll();
+            return View(Employees);
         }
 
-        
+
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(Employee Employee)
         {
             if (ModelState.IsValid) // server sidee validation
             {
-                var count = _departmentRepo.Add(department);
+                var count = _EmployeeRepo.Add(Employee);
                 if (count > 0)
                     return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(Employee);
         }
 
         [HttpGet]
 
-        public IActionResult Details(int? id , string ViewName = "Details")
+        public IActionResult Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest();
 
-            var department = _departmentRepo.Get(id.Value);
+            var Employee = _EmployeeRepo.Get(id.Value);
 
-            if (department is null)
-                   return NotFound();
-            
-            return View(department);
+            if (Employee is null)
+                return NotFound();
+
+            return View(Employee);
         }
 
         [HttpGet]
 
-        public IActionResult Edit(int? id) 
+        public IActionResult Edit(int? id)
         {
             return Details(id, "Edit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit( [FromRoute] int id , Department dept)
+        public IActionResult Edit([FromRoute] int id, Employee dept)
         {
 
             if (id != dept.Id)
@@ -77,17 +79,17 @@ namespace MVC.Demo03.PL.Controllers
 
             try
             {
-                _departmentRepo.Update(dept);
+                _EmployeeRepo.Update(dept);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 // 1- Log Exception
                 // 2- Friendly Message
-                if(_env.IsDevelopment())
-                ModelState.AddModelError(string.Empty , ex.Message);
+                if (_env.IsDevelopment())
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 else
-                    ModelState.AddModelError(string.Empty, "An Error in Department");
+                    ModelState.AddModelError(string.Empty, "An Error in Employee");
 
                 return View(dept);
 
@@ -97,26 +99,25 @@ namespace MVC.Demo03.PL.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            return Details(id,"Delete");
+            return Details(id, "Delete");
         }
 
         [HttpPost]
-        public IActionResult Delete(Department dept)
+        public IActionResult Delete(Employee dept)
         {
             try
             {
-                _departmentRepo.Delete(dept);
+                _EmployeeRepo.Delete(dept);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
 
-                 ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return View(dept);
             }
 
         }
-
 
     }
 }
