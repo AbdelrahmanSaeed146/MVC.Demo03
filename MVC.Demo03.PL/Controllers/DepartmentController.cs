@@ -20,6 +20,10 @@ namespace MVC.Demo03.PL.Controllers
         }
         public IActionResult Index()
         {
+
+            //ViewData["Message"] = "Hello ViewData";
+            //ViewBag.Message = "Hello ViewBag";
+
             var departments = _departmentRepo.GetAll(); 
             return View(departments);
         }
