@@ -22,6 +22,7 @@ namespace MVC.Demo03.PL.Controllers
 
         public IActionResult Index()
         {
+            TempData.Keep();
             var Employees = _EmployeeRepo.GetAll();
             return View(Employees);
         }
@@ -39,7 +40,12 @@ namespace MVC.Demo03.PL.Controllers
             {
                 var count = _EmployeeRepo.Add(Employee);
                 if (count > 0)
+                    TempData["Message"] = "Employee is Created Successfuly";
+                else
+                    TempData["Message"] = "Employee Not Added";
+
                     return RedirectToAction(nameof(Index));
+
             }
             return View(Employee);
         }
