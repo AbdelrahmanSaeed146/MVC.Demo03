@@ -32,6 +32,8 @@ namespace MVC.Demo03.DAL.Data.configurations
                 (EmployeeType) => (EmpType)Enum.Parse(typeof(EmpType), EmployeeType, true)
                 );
 
+            builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
+
         }
     }
 }

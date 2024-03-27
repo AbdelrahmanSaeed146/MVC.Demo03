@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Data;
+using MVC.Demo03.PL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,8 @@ namespace MVC.Demo03.PL
             //services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
             //services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
 
 
         }
