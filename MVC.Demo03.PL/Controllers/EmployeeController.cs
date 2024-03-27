@@ -12,11 +12,13 @@ namespace MVC.Demo03.PL.Controllers
 
         private readonly IEmployeeRepository _EmployeeRepo;
         private readonly IWebHostEnvironment _env;
+        //private readonly IDepartmentRepository _departmentRepo;
 
-        public EmployeeController(IEmployeeRepository employeeRepo, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepo, IWebHostEnvironment env /*, IDepartmentRepository departmentRepo*/)
         {
             _EmployeeRepo = employeeRepo;
             _env = env;
+            //_departmentRepo = departmentRepo;
         }
 
 
@@ -24,12 +26,15 @@ namespace MVC.Demo03.PL.Controllers
         {
             TempData.Keep();
             var Employees = _EmployeeRepo.GetAll();
+      
             return View(Employees);
         }
 
 
         public IActionResult Create()
         {
+            //ViewData["Departments"] = _departmentRepo.GetAll();
+            //ViewBag.Departments = _departmentRepo.GetAll();
             return View();
         }
 

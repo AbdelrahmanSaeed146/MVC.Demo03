@@ -45,7 +45,18 @@ namespace MVC.Demo03.BLL.Repositories
         }
 
         public IEnumerable<T> GetAll()
-       => _DbContext.Set<T>().AsNoTracking().ToList();
+        {
+
+            if (typeof(T) == typeof(Employee))
+            {
+                return (IEnumerable<T>) _DbContext.Employees.Include(e => e.Department).AsNoTracking().ToList();
+            }
+            else
+            {
+                return _DbContext.Set<T>().AsNoTracking().ToList();
+            }
+            
+        }
 
     }
 }
