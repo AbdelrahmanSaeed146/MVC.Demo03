@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -69,6 +70,11 @@ namespace MVC.Demo03.DAL.Models
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public bool IsDeleted { get; set; } = false;
+
+        public int? DepartmentId { get; set; }
+
+        //[InverseProperty(nameof(Models.Department.Employees))]
+        public Department Department { get; set; }
 
     }
 }
