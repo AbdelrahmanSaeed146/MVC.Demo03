@@ -13,12 +13,25 @@
 <br/>
   
 
-@if (!string.IsNullOrEmpty(TempData["Message"] as string))
+@* @if (!string.IsNullOrEmpty(TempData["Message"] as string))
 {
     <div class="alert alert-success">
         @TempData["Message"]
     </div>
-}
+} *@
+
+
+<div class="row justify-content-center align-items-center  mt-5">
+    <form asp-action="Index" class="row col-8 offset-2 ">
+        <div class="col-8">
+            <input type="text" class="form-control " name="SearchInput" placeholder="Search By Name" />
+        </div>
+        <div class="col-4">
+            <input type="submit" class="btn btn-success " value="Search"  />
+        </div>
+    </form>
+</div>
+
 
 
 @if (Model.Count() > 0 )

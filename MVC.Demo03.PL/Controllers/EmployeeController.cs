@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.DAL.Models;
 using System;
+using System.Linq;
 
 namespace MVC.Demo03.PL.Controllers
 {
@@ -22,12 +23,18 @@ namespace MVC.Demo03.PL.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index( string SearchInput)
         {
-            TempData.Keep();
-            var Employees = _EmployeeRepo.GetAll();
-      
-            return View(Employees);
+            var employee = Enumerable.Empty<Employee>();
+
+            if (string.IsNullOrEmpty(SearchInput))
+                 employee = _EmployeeRepo.GetAll();
+            else
+                 employee = _EmployeeRepo.SearchByName(SearchInput.ToLower());
+
+                return View(employee);
+
+
         }
 
 
