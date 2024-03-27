@@ -38,10 +38,20 @@ namespace MVC.Demo03.PL
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+            //services.AddSingleton<IDepartmentRepository, DepartmentRepository>();
+            //services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            //services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+
+            //services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
