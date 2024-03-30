@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.Demo03.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,7 @@ namespace MVC.Demo03.BLL.Interfaces
     {
 
 
-        public IEmployeeRepository EmployeeRepository { get; set; }
-        public IDepartmentRepository DepartmentRepository { get; set; }
+        IGenaricRepository<T> Repository<T>() where  T : ModelBase;
 
         int Complete();
        

@@ -22,7 +22,7 @@ namespace MVC.Demo03.PL.Controllers
         {
 
 
-            var departments = _unitOfWork.DepartmentRepository.GetAll(); 
+            var departments = _unitOfWork.Repository<Department>().GetAll(); 
 
             return View(departments);
         }
@@ -38,7 +38,7 @@ namespace MVC.Demo03.PL.Controllers
         {
             if (ModelState.IsValid) // server sidee validation
             {
-                _unitOfWork.DepartmentRepository.Add(department);
+                _unitOfWork.Repository<Department>().Add(department);
 
                 var count = _unitOfWork.Complete();
                 if (count > 0)
@@ -54,7 +54,7 @@ namespace MVC.Demo03.PL.Controllers
             if (id is null)
                 return BadRequest();
 
-            var department = _unitOfWork.DepartmentRepository.Get(id.Value);
+            var department = _unitOfWork.Repository<Department>().Get(id.Value);
 
             if (department is null)
                    return NotFound();
@@ -82,7 +82,7 @@ namespace MVC.Demo03.PL.Controllers
 
             try
             {
-                _unitOfWork.DepartmentRepository.Update(dept);
+                _unitOfWork.Repository<Department>().Update(dept);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
@@ -111,7 +111,7 @@ namespace MVC.Demo03.PL.Controllers
         {
             try
             {
-                _unitOfWork.DepartmentRepository.Delete(dept);
+                _unitOfWork.Repository<Department>().Delete(dept);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }

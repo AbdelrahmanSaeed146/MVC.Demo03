@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
+using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Models;
 using MVC.Demo03.PL.Models;
 using Newtonsoft.Json.Linq;
@@ -30,11 +31,12 @@ namespace MVC.Demo03.PL.Controllers
         public IActionResult Index( string SearchInput)
         {
             var employee = Enumerable.Empty<Employee>();
+            var EmpRepo = _unitOfWork.Repository<Employee>() as EmployeeRepository;
 
             if (string.IsNullOrEmpty(SearchInput))
-                 employee = _unitOfWork.EmployeeRepository.GetAll();
+                 employee = _unitOfWork.Repository<Employee>().GetAll();
             else
-                 employee = _unitOfWork.EmployeeRepository.SearchByName(SearchInput.ToLower());
+                 employee = EmpRepo.SearchByName(SearchInput.ToLower());
 
             var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employee);
 
@@ -63,7 +65,7 @@ namespace MVC.Demo03.PL.Controllers
 
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
 
-                _unitOfWork.EmployeeRepository.Add(mappedEmp);
+                _unitOfWork.Repository<Employee>().Add(mappedEmp);
 
                 var count = _unitOfWork.Complete();
 
@@ -88,7 +90,7 @@ namespace MVC.Demo03.PL.Controllers
                 return BadRequest();
 
 
-            var Employee = _unitOfWork.EmployeeRepository.Get(id.Value);
+            var Employee = _unitOfWork.Repository<Employee>().Get(id.Value);
             var mappedEmp = _mapper.Map<Employee, EmployeeViewModel>(Employee);
 
 
@@ -120,7 +122,7 @@ namespace MVC.Demo03.PL.Controllers
             {
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
 
-                _unitOfWork.EmployeeRepository.Update(mappedEmp);
+                _unitOfWork.Repository<Employee>().Update(mappedEmp);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
@@ -151,7 +153,7 @@ namespace MVC.Demo03.PL.Controllers
             {
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
 
-                _unitOfWork.EmployeeRepository.Delete(mappedEmp);
+                _unitOfWork.Repository<Employee>().Delete(mappedEmp);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
