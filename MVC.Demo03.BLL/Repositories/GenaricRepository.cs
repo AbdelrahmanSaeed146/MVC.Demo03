@@ -13,35 +13,31 @@ namespace MVC.Demo03.BLL.Repositories
 {
     public class GenaricRepository<T> : IGenaricRepository<T> where T : ModelBase
     {
-        private protected readonly AppDbContext _DbContext;
+        private protected readonly AppDbContext _dbcontext;
 
         public GenaricRepository(AppDbContext dbcontext)
         {
-            _DbContext = dbcontext;
+            _dbcontext = dbcontext;
         }
 
 
-        public int Add(T entity)
-        {
-            _DbContext.Set<T>().Add(entity);
-            return _DbContext.SaveChanges();
-        }
+        public void Add(T entity)
+            => _dbcontext.Set<T>().Add(entity);
+          
+        
 
-        public int Update(T entity)
-        {
-            _DbContext.Set<T>().Update(entity);
-            return _DbContext.SaveChanges();
-        }
+        public void Update(T entity)
+         => _dbcontext.Set<T>().Update(entity);
 
-        public int Delete(T entity)
-        {
-            _DbContext.Set<T>().Remove(entity);
-            return _DbContext.SaveChanges();
-        }
+
+        public void Delete(T entity)
+          =>
+            _dbcontext.Set<T>().Remove(entity);
+
 
         public T Get(int id)
         {
-            return _DbContext.Find<T>(id);
+            return _dbcontext.Find<T>(id);
         }
 
         public IEnumerable<T> GetAll()
@@ -49,11 +45,11 @@ namespace MVC.Demo03.BLL.Repositories
 
             if (typeof(T) == typeof(Employee))
             {
-                return (IEnumerable<T>) _DbContext.Employees.Include(e => e.Department).AsNoTracking().ToList();
+                return (IEnumerable<T>)_dbcontext.Employees.Include(e => e.Department).AsNoTracking().ToList();
             }
             else
             {
-                return _DbContext.Set<T>().AsNoTracking().ToList();
+                return _dbcontext.Set<T>().AsNoTracking().ToList();
             }
             
         }

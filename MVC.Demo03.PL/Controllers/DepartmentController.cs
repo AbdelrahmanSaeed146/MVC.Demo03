@@ -10,21 +10,20 @@ namespace MVC.Demo03.PL.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
 
-        public DepartmentController( IDepartmentRepository departmentRepo , IWebHostEnvironment env)
+        public DepartmentController( /*IDepartmentRepository departmentRepo*/  IUnitOfWork unitOfWork , IWebHostEnvironment env)
         {
-            _departmentRepo = departmentRepo;
+            _unitOfWork = unitOfWork;
             _env = env;
         }
         public IActionResult Index()
         {
 
-            //ViewData["Message"] = "Hello ViewData";
-            //ViewBag.Message = "Hello ViewBag";
 
-            var departments = _departmentRepo.GetAll(); 
+            var departments = _unitOfWork.DepartmentRepository.GetAll(); 
+
             return View(departments);
         }
 
@@ -39,7 +38,9 @@ namespace MVC.Demo03.PL.Controllers
         {
             if (ModelState.IsValid) // server sidee validation
             {
-                var count = _departmentRepo.Add(department);
+                _unitOfWork.DepartmentRepository.Add(department);
+
+                var count = _unitOfWork.Complete();
                 if (count > 0)
                     return RedirectToAction(nameof(Index));
             }
@@ -53,7 +54,7 @@ namespace MVC.Demo03.PL.Controllers
             if (id is null)
                 return BadRequest();
 
-            var department = _departmentRepo.Get(id.Value);
+            var department = _unitOfWork.DepartmentRepository.Get(id.Value);
 
             if (department is null)
                    return NotFound();
@@ -81,7 +82,8 @@ namespace MVC.Demo03.PL.Controllers
 
             try
             {
-                _departmentRepo.Update(dept);
+                _unitOfWork.DepartmentRepository.Update(dept);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -109,7 +111,8 @@ namespace MVC.Demo03.PL.Controllers
         {
             try
             {
-                _departmentRepo.Delete(dept);
+                _unitOfWork.DepartmentRepository.Delete(dept);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

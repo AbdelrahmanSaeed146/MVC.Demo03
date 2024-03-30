@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC.Demo03.BLL;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Data;
@@ -40,17 +41,15 @@ namespace MVC.Demo03.PL
             });
 
 
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            ///services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            ///services.AddSingleton<IDepartmentRepository, DepartmentRepository>();
+            ///services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            ///services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            ///services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            ///services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
-            //services.AddSingleton<IDepartmentRepository, DepartmentRepository>();
-            //services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
-            //services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-
-            //services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
             services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
 
