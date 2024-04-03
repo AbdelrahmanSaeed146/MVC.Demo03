@@ -1,0 +1,41 @@
+﻿@model SignUpViewModel;
+
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/AuthLayout.cshtml";
+}
+
+<form class="form" asp-action="SignUp">
+    <p class="title">Register </p>
+    <p class="message">Signup now and get full access to our app. </p>
+    <div class="flex">
+        <label>
+            <input class="input" asp-for="FirstName" placeholder="First Name" required="">
+        </label>
+        <label>
+            <input class="input" asp-for="LastName" placeholder="Last Name" required="">
+        </label>
+        <label>
+            <input class="input" asp-for="UserName" placeholder="UserName" required="">
+        </label>
+
+        <label>
+            <input class="input" asp-for="Email" placeholder="Email" required="">
+        </label>
+    </div>
+
+    <label>
+        <input class="input" asp-for="Password" placeholder="Password" required="">
+    </label>
+
+    <label>
+        <input class="input" asp-for="ConfirmPassword" placeholder="Confirm Password" required="">
+    </label>
+    <label>
+        <input class="input" type="password" placeholder="" required="">
+
+    </label>
+    <button class="submit">Submit</button>
+    <p class="signin">Already have an account ? <a asp-action="SignIn">Signin</a> </p>
+</form>
+

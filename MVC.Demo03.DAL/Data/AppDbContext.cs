@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.DAL.Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)

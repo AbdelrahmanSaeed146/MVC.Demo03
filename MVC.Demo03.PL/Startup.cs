@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using MVC.Demo03.BLL;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Data;
+using MVC.Demo03.DAL.Models;
 using MVC.Demo03.PL.Helpers;
 using System;
 using System.Collections.Generic;
@@ -52,6 +54,25 @@ namespace MVC.Demo03.PL
 
 
             services.AddAutoMapper(M=>M.AddProfile(new MappingProfiles()));
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 5;
+
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(5);
+
+                options.User.RequireUniqueEmail = true;
+
+            }
+           ).AddEntityFrameworkStores<AppDbContext>();
 
 
         }
