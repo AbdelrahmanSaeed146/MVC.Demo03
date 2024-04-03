@@ -51,6 +51,12 @@ namespace MVC.Demo03.DAL.Models
 
         public Gender Gender { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public string imageName { get; set; }
+
         public EmpType EmployeeType { get; set; }
 
         public int? DepartmentId { get; set; }

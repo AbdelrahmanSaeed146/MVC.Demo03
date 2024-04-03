@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using MVC.Demo03.BLL.Interfaces;
 using MVC.Demo03.BLL.Repositories;
 using MVC.Demo03.DAL.Models;
+using MVC.Demo03.PL.Helpers;
 using MVC.Demo03.PL.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -62,19 +63,25 @@ namespace MVC.Demo03.PL.Controllers
 
             if (ModelState.IsValid) // server sidee validation
             {
+               EmployeeVM.ImageName =  DocumentSetting.UploadFile(EmployeeVM.image, "Images");
+
 
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
+
+           
 
                 _unitOfWork.Repository<Employee>().Add(mappedEmp);
 
                 var count = _unitOfWork.Complete();
 
+            
+
                 if (count > 0)
-                    TempData["Message"] = "Employee is Created Successfuly";
-                else
-                    TempData["Message"] = "Employee Not Added";
+                {
 
                     return RedirectToAction(nameof(Index));
+                }
+
 
             }
             return View(EmployeeVM);

@@ -1,6 +1,7 @@
 ﻿using MVC.Demo03.DAL.Models;
 using System.ComponentModel.DataAnnotations;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace MVC.Demo03.PL.Models
 {
@@ -41,6 +42,10 @@ namespace MVC.Demo03.PL.Models
         public DateTime HiringDate { get; set; }
 
         public Gender Gender { get; set; }
+
+        public IFormFile image { get; set; }
+
+        public string ImageName { get; set; }
 
         public EmpType EmployeeType { get; set; }
 
