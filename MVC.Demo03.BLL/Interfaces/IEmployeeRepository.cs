@@ -11,6 +11,6 @@ namespace MVC.Demo03.BLL.Interfaces
     {
             IQueryable<Employee> GetEmployeesByAddress(string address);
 
-            IQueryable<Employee> SearchByName(string Name);
+           IQueryable<Employee>SearchByName(string Name);
     }
 }

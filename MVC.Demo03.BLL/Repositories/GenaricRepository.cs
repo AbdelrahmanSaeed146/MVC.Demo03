@@ -21,8 +21,8 @@ namespace MVC.Demo03.BLL.Repositories
         }
 
 
-        public void Add(T entity)
-            => _dbcontext.Set<T>().Add(entity);
+        public void  Add(T entity)
+            =>  _dbcontext.Set<T>().Add(entity);
           
         
 
@@ -35,21 +35,21 @@ namespace MVC.Demo03.BLL.Repositories
             _dbcontext.Set<T>().Remove(entity);
 
 
-        public T Get(int id)
+        public async Task<T> Get(int id)
         {
-            return _dbcontext.Find<T>(id);
+            return await _dbcontext.FindAsync<T>(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task <IEnumerable<T>> GetAll()
         {
 
             if (typeof(T) == typeof(Employee))
             {
-                return (IEnumerable<T>)_dbcontext.Employees.Include(e => e.Department).AsNoTracking().ToList();
+                return (IEnumerable<T>) await _dbcontext.Employees.Include(e => e.Department).AsNoTracking().ToListAsync();
             }
             else
             {
-                return _dbcontext.Set<T>().AsNoTracking().ToList();
+                return await _dbcontext.Set<T>().AsNoTracking().ToListAsync();
             }
             
         }

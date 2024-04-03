@@ -52,14 +52,18 @@ namespace MVC.Demo03.BLL
         }
 
 
-        public int Complete()
+        public async Task<int> Complete()
         {
-           return _dbcontext.SaveChanges();
+           return await _dbcontext.SaveChangesAsync();
         }
-        public void Dispose()
-        {
-            _dbcontext.Dispose();
-        }
+        //public async ValueTask Dispose()
+        //{
+           
+        //}
 
+        public async ValueTask DisposeAsync()
+        {
+            await _dbcontext.DisposeAsync();
+        }
     }
 }

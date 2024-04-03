@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace MVC.Demo03.BLL.Interfaces
 {
-    public interface IUnitOfWork :IDisposable
+    public interface IUnitOfWork :IAsyncDisposable
     {
 
 
         IGenaricRepository<T> Repository<T>() where  T : ModelBase;
 
-        int Complete();
+        Task<int> Complete();
        
     }
 }

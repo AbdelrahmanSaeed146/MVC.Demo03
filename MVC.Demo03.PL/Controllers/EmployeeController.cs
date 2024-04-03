@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVC.Demo03.PL.Controllers
 {
@@ -29,13 +30,13 @@ namespace MVC.Demo03.PL.Controllers
         }
 
 
-        public IActionResult Index( string SearchInput)
+        public async Task<IActionResult> Index( string SearchInput)
         {
             var employee = Enumerable.Empty<Employee>();
             var EmpRepo = _unitOfWork.Repository<Employee>() as EmployeeRepository;
 
             if (string.IsNullOrEmpty(SearchInput))
-                 employee = _unitOfWork.Repository<Employee>().GetAll();
+                 employee = await _unitOfWork.Repository<Employee>().GetAll();
             else
                  employee = EmpRepo.SearchByName(SearchInput.ToLower());
 
@@ -56,14 +57,14 @@ namespace MVC.Demo03.PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(EmployeeViewModel EmployeeVM)
+        public async Task< IActionResult> Create(EmployeeViewModel EmployeeVM)
         {
 
 
 
             if (ModelState.IsValid) // server sidee validation
             {
-               EmployeeVM.ImageName =  DocumentSetting.UploadFile(EmployeeVM.image, "Images");
+               EmployeeVM.ImageName = await  DocumentSetting.UploadFile(EmployeeVM.image, "Images");
 
 
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
@@ -72,7 +73,7 @@ namespace MVC.Demo03.PL.Controllers
 
                 _unitOfWork.Repository<Employee>().Add(mappedEmp);
 
-                var count = _unitOfWork.Complete();
+                var count = await _unitOfWork.Complete();
 
             
 
@@ -91,13 +92,13 @@ namespace MVC.Demo03.PL.Controllers
 
         [HttpGet]
 
-        public IActionResult Details(int? id, string ViewName = "Details")
+        public async Task <IActionResult> Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest();
 
 
-            var Employee = _unitOfWork.Repository<Employee>().Get(id.Value);
+            var Employee = await _unitOfWork.Repository<Employee>().Get(id.Value);
             var mappedEmp = _mapper.Map<Employee, EmployeeViewModel>(Employee);
 
 
@@ -112,14 +113,14 @@ namespace MVC.Demo03.PL.Controllers
 
         [HttpGet]
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult>  Edit(int? id)
         {
-            return Details(id, "Edit");
+            return await Details(id, "Edit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int id, EmployeeViewModel EmployeeVM)
+        public async Task<IActionResult> Edit([FromRoute] int id, EmployeeViewModel EmployeeVM)
         {
 
             if (id != EmployeeVM.Id)
@@ -133,7 +134,7 @@ namespace MVC.Demo03.PL.Controllers
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
 
                 _unitOfWork.Repository<Employee>().Update(mappedEmp);
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -151,13 +152,13 @@ namespace MVC.Demo03.PL.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
         }
 
         [HttpPost]
-        public IActionResult Delete(EmployeeViewModel EmployeeVM)
+        public async Task<IActionResult> Delete(EmployeeViewModel EmployeeVM)
         {
             try
             {
@@ -166,7 +167,7 @@ namespace MVC.Demo03.PL.Controllers
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(EmployeeVM);
 
                 _unitOfWork.Repository<Employee>().Delete(mappedEmp);
-               var count =  _unitOfWork.Complete();
+               var count = await _unitOfWork.Complete();
                 if (count > 0)
                 {
                     DocumentSetting.DeleteFile(EmployeeVM.ImageName, "Images");

@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MVC.Demo03.PL.Helpers
 {
     public static class DocumentSetting
     {
-        public static string UploadFile( IFormFile File, string FolderName)
+        public static async Task< string> UploadFile( IFormFile File, string FolderName)
         {
             //string FolderPath = $"{Directory.GetCurrentDirectory()}\\wwwroot\\Files\\{FolderName}";
 
@@ -21,7 +22,7 @@ namespace MVC.Demo03.PL.Helpers
 
             using var FileStream = new FileStream(FilePath,FileMode.Create);
 
-            File.CopyTo(FileStream);
+            await File.CopyToAsync(FileStream);
 
             return FileName;
         }
